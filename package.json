@@ -4,8 +4,7 @@
     "description": "CuanGmail - Worker Task Email System",
     "main": "index.html",
     "scripts": {
-        "dev": "serve .",
-        "build": "echo 'Build complete'"
+        "start": "serve ."
     },
     "keywords": ["task", "email", "worker", "dana"],
     "author": "CuanGmail",
