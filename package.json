@@ -1,0 +1,13 @@
+{
+    "name": "cuangmail",
+    "version": "2.0.0",
+    "description": "CuanGmail - Worker Task Email System",
+    "main": "index.html",
+    "scripts": {
+        "dev": "serve .",
+        "build": "echo 'Build complete'"
+    },
+    "keywords": ["task", "email", "worker", "dana"],
+    "author": "CuanGmail",
+    "license": "MIT"
+}

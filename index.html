@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>CuanGmail - Login & Daftar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 40px;
+            padding: 40px 32px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-logo .icon { font-size: 56px; }
+        .auth-logo h2 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .auth-logo p { color: #6b7280; font-size: 13px; margin-top: 6px; }
+
+        .auth-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            background: #f3f4f6;
+            padding: 6px;
+            border-radius: 60px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 60px;
+            color: #6b7280;
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #f9fafb;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .input-hint {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(102,126,234,0.4);
+        }
+
+        .error-msg {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-msg {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .dana-info {
+            background: linear-gradient(135deg, #0057A8, #0078D4);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+        }
+        .dana-info span { font-size: 24px; }
+        .dana-info p { font-size: 12px; margin-top: 5px; opacity: 0.9; }
+
+        @media (max-width: 480px) {
+            .auth-card { padding: 32px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <div class="icon">📧</div>
+                <h2>CuanGmail</h2>
+                <p>Ambil Task • Setor • Dapat Rp2.500/Gmail</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="register">Daftar</button>
+            </div>
+
+            <div id="errorMsg" class="error-msg"></div>
+            <div id="successMsg" class="success-msg"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername" placeholder="Masukkan username" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="auth-btn">Login Sekarang</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;">
+                <div class="dana-info">
+                    <span>💰</span>
+                    <p>Payment via DANA • Potongan Rp48</p>
+                </div>
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="regUsername" placeholder="Buat username" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Buat password" required>
+                </div>
+                <div class="input-group">
+                    <label>Konfirmasi Password</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Konfirmasi password" required>
+                </div>
+                <div class="input-group">
+                    <label>Nama Lengkap (sesuai DANA)</label>
+                    <input type="text" id="regDanaName" placeholder="Contoh: Ahmad Rizki" required>
+                </div>
+                <div class="input-group">
+                    <label>Nomor DANA (No HP)</label>
+                    <input type="tel" id="regDanaNumber" placeholder="Contoh: 081234567890" required>
+                    <span class="input-hint">*Semua pembayaran akan dikirim ke nomor ini</span>
+                </div>
+                <button type="submit" class="auth-btn">Daftar Sekarang</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CUANGMAIL - LOGIN & REGISTER
+        // ============================================
+
+        let users = {};
+
+        function loadData() {
+            const saved = localStorage.getItem('cuangmail_users_final');
+            if (saved) users = JSON.parse(saved);
+        }
+
+        function saveUsers() {
+            localStorage.setItem('cuangmail_users_final', JSON.stringify(users));
+        }
+
+        function showError(msg) {
+            const div = document.getElementById('errorMsg');
+            div.textContent = msg;
+            div.style.display = 'block';
+            setTimeout(() => { div.style.display = 'none'; }, 3000);
+        }
+
+        function showSuccess(msg) {
+            const div = document.getElementById('successMsg');
+            div.textContent = msg;
+            div.style.display = 'block';
+            setTimeout(() => { div.style.display = 'none'; }, 3000);
+        }
+
+        // Tab切换
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const isLogin = tab.dataset.tab === 'login';
+                document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+                document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
+                document.getElementById('errorMsg').style.display = 'none';
+                document.getElementById('successMsg').style.display = 'none';
+            });
+        });
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            loadData();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!users[username]) {
+                showError('Username tidak ditemukan');
+                return;
+            }
+            if (users[username].password !== password) {
+                showError('Password salah');
+                return;
+            }
+
+            localStorage.setItem('cuangmail_session_final', username);
+            window.location.href = 'dashboard.html';
+        });
+
+        // Register
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            loadData();
+
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirmPassword').value;
+            const danaName = document.getElementById('regDanaName').value.trim();
+            const danaNumber = document.getElementById('regDanaNumber').value.trim();
+
+            if (username.length < 3) {
+                showError('Username minimal 3 karakter');
+                return;
+            }
+            if (users[username]) {
+                showError('Username sudah terdaftar');
+                return;
+            }
+            if (password.length < 4) {
+                showError('Password minimal 4 karakter');
+                return;
+            }
+            if (password !== confirm) {
+                showError('Konfirmasi password tidak cocok');
+                return;
+            }
+            if (!danaName || danaName.length < 3) {
+                showError('Masukkan nama lengkap yang valid');
+                return;
+            }
+            if (!danaNumber || danaNumber.length < 10 || !/^[0-9]+$/.test(danaNumber)) {
+                showError('Nomor DANA tidak valid (minimal 10 digit angka)');
+                return;
+            }
+
+            users[username] = {
+                username: username,
+                password: password,
+                displayName: username,
+                fullName: danaName,
+                danaNumber: danaNumber,
+                balance: 0,
+                totalWithdrawn: 0,
+                pendingBalance: 0,
+                deposits: [],
+                withdrawals: [],
+                stats: { tasksDone: 0, pendingTasks: 0, totalEarned: 0 }
+            };
+
+            saveUsers();
+            showSuccess('✅ Pendaftaran berhasil! Silakan login.');
+
+            setTimeout(() => {
+                document.querySelector('.auth-tab[data-tab="login"]').click();
+                document.getElementById('loginUsername').value = username;
+            }, 1500);
+        });
+
+        loadData();
+        const session = localStorage.getItem('cuangmail_session_final');
+        if (session && users[session]) {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

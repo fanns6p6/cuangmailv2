@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>CuanGmail - Dashboard Worker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="app-logo">
+                <span>📧</span>
+                <h1>CuanGmail</h1>
+            </div>
+            <div class="user-menu">
+                <span class="user-name" id="navUsername">Worker</span>
+                <button class="logout-btn" id="logoutBtn">Keluar</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-label">Saldo Tersedia</div>
+                    <div class="stat-value" id="statBalance">Rp 0</div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-label">Pending ACC</div>
+                    <div class="stat-value" id="statPending">Rp 0</div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-label">Task Disetor</div>
+                    <div class="stat-value" id="statTasksDone">0</div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">🏧</div>
+                    <div class="stat-label">Total WD</div>
+                    <div class="stat-value" id="statWithdrawn">Rp 0</div>
+                </div>
+            </div>
+
+            <div class="menu-grid">
+                <button class="menu-card" onclick="showAmbilTask()">
+                    <span class="menu-icon">📥</span>
+                    <div class="menu-title">Ambil Task</div>
+                    <div class="menu-desc">Generate email baru</div>
+                </button>
+                <button class="menu-card" onclick="showSetorTask()">
+                    <span class="menu-icon">📤</span>
+                    <div class="menu-title">Setor Task</div>
+                    <div class="menu-desc">Setorkan email</div>
+                </button>
+                <button class="menu-card" onclick="showSaldo()">
+                    <span class="menu-icon">💰</span>
+                    <div class="menu-title">Saldo</div>
+                    <div class="menu-desc">Lihat detail saldo</div>
+                </button>
+                <button class="menu-card" onclick="showTarik()">
+                    <span class="menu-icon">🏧</span>
+                    <div class="menu-title">Tarik Saldo</div>
+                    <div class="menu-desc">Minimal Rp1.000</div>
+                </button>
+                <button class="menu-card" onclick="showRekening()">
+                    <span class="menu-icon">💳</span>
+                    <div class="menu-title">Rekening</div>
+                    <div class="menu-desc">Info DANA kamu</div>
+                </button>
+                <button class="menu-card" onclick="showHistory()">
+                    <span class="menu-icon">📜</span>
+                    <div class="menu-title">History</div>
+                    <div class="menu-desc">Riwayat transaksi</div>
+                </button>
+            </div>
+
+            <div class="panel" id="mainPanel">
+                <div class="panel-header">
+                    <h3 id="panelTitle">Selamat Datang</h3>
+                    <button class="close-panel" onclick="closePanel()">✕</button>
+                </div>
+                <div class="panel-body" id="panelBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Memproses...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
